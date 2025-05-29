@@ -67,20 +67,27 @@ if st.sidebar.button("Cek Disini"):
     # -------------------------------
     # 6. Grafik Perbandingan
     # -------------------------------
-    st.subheader("Perbandingan dengan Rata-rata Dataset dengan Input")
+    st.subheader("Perbandingan dengan Rata-rata Orang Normal")
+
     df_diabetes = pd.read_csv("diabetes.csv")
 
-    avg_diabetes = df_diabetes[df_diabetes["Outcome"]==1].drop(columns="Outcome").mean()
-    avg_normal = df_diabetes[df_diabetes["Outcome"]==0].drop(columns="Outcome").mean()
+    # Hitung rata-rata data normal (Outcome == 0)
+    avg_normal = df_diabetes[df_diabetes["Outcome"] == 0].drop(columns="Outcome").mean()
 
+    # Buat DataFrame perbandingan
     df_compare = pd.DataFrame({
-        "User Input": np.array(input_data),
-        "Rata-rata Diabetes": avg_diabetes,
+        "User Input": input_data,
         "Rata-rata Normal": avg_normal
     })
 
-    st.line_chart(df_compare.T)
-
+    # Plot diagram batang menggunakan matplotlib
+    fig, ax = plt.subplots(figsize=(10, 5))
+    df_compare.plot(kind="bar", ax=ax)
+    plt.xticks(rotation=45, ha='right')
+    plt.ylabel("Nilai")
+    plt.title("Perbandingan Data Pasien dengan Rata-rata Orang Normal")
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    st.pyplot(fig)
     # -------------------------------
     # 7. Simpan ke riwayat (opsional)
     # -------------------------------
