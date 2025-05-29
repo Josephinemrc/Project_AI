@@ -98,3 +98,4 @@ if st.sidebar.button("Cek Disini"):
         df_input.to_csv("riwayat_diagnosa.csv", index=False)
     else:
         df_input.to_csv("riwayat_diagnosa.csv", mode='a', header=False, index=False)
+    ##done
